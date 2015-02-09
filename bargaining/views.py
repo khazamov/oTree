@@ -52,9 +52,6 @@ class Request(Page):
 
     template_name = 'bargaining/Request.html'
 
-    form_model = models.Player
-    form_fields = ['request_amount']
-
     def vars_for_template(self):
         return {
             'amount_shared': Constants.amount_shared,

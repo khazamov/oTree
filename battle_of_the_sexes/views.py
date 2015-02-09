@@ -58,9 +58,6 @@ class Decide(Page):
 
     template_name = 'battle_of_the_sexes/Decide.html'
 
-    form_model = models.Player
-    form_fields = ['decision']
-
     def vars_for_template(self):
         return {'role': self.player.role(),
                 'fbl_husband_amt': Constants.football_husband_amount,

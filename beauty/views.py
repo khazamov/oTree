@@ -49,9 +49,6 @@ class Guess(Page):
 
     template_name = 'beauty/Guess.html'
 
-    form_model = models.Player
-    form_fields = ['guess_value']
-
 
 class ResultsWaitPage(WaitPage):
 
