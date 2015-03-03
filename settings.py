@@ -3,6 +3,7 @@ import os
 import dj_database_url
 
 import otree.settings
+#from otree.common import RealWorldCurrency
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -34,7 +35,7 @@ DATABASES = {
 CREATE_DEFAULT_SUPERUSER = True
 ADMIN_USERNAME = 'admin'
 AUTH_LEVEL = os.environ.get('OTREE_AUTH_LEVEL')
-ACCESS_CODE_FOR_OPEN_SESSION = 'idd1610'
+ACCESS_CODE_FOR_DEFAULT_SESSION = 'idd1610'
 
 # settting for intergration with AWS Mturk
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -43,7 +44,7 @@ MTURK_HOST = 'mechanicalturk.amazonaws.com'
 MTURK_SANDBOX_HOST = 'mechanicalturk.sandbox.amazonaws.com'
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
-PAYMENT_CURRENCY_CODE = 'EUR'
+PAYMENT_CURRENCY_CODE = 'USD'
 USE_POINTS = True
 
 
@@ -62,9 +63,9 @@ if 'SENTRY_DSN' in os.environ:
     ]
 
 SESSION_TYPE_DEFAULTS = {
-    'money_per_point': 0.01,
+    'real_world_currency_per_point': 0.01,
     'demo_enabled': True,
-    'fixed_pay': 10.00, # this is payment currency (not points)
+    'fixed_pay': 10.00,
     'num_bots': 12,
     'doc': "",
     'group_by_arrival_time': False,
@@ -73,9 +74,8 @@ SESSION_TYPE_DEFAULTS = {
         'title': 'Title for your experiment',
         'description': 'Description for your experiment',
         'frame_height': 500,
-        'landing_page_template': 'global/mturk_landing.html',
+        'landing_page_template': 'global/MTurkLanding.html',
     },
-    'mturk_sandbox': True,
 }
 
 SESSION_TYPES = [
@@ -186,7 +186,7 @@ SESSION_TYPES = [
     {
         'name': 'stackelberg_competition',
         'display_name': "Stackelberg Competition",
-        'money_per_point': 0.01,
+        'real_world_currency_per_point': 0.01,
         'num_demo_participants': 2,
         'app_sequence': [
             'stackelberg_competition', 'survey_sample', 'payment_info'
@@ -234,39 +234,23 @@ SESSION_TYPES = [
             'real_effort',
         ],
     },
-
-    {
-        'name': 'matrix_symmetric',
-        'display_name': "Symmetric Matrix Game DEMO",
-        'num_demo_participants':  2,
-        'app_sequence': [
-            'matrix_symmetric', 'payment_info'
-        ],
-    },
-    {
-        'name': 'matrix_asymmetric',
-        'display_name': "Asymmetric Matrix Game DEMO",
-        'num_demo_participants':  2,
-        'app_sequence': [
-            'matrix_asymmetric','payment_info'
-        ],
-    },
     {
         'name': 'lemon_market',
-        'display_name': "Lemon Market Game DEMO",
+        'display_name': "Lemon Market Game",
         'num_demo_participants':  3,
         'app_sequence': [
             'lemon_market','payment_info'
         ],
     },
     {
-        'name': 'cournot_competition',
-        'display_name': "Cournot competititon DEMO",
-        'num_demo_participants':  2,
+        'name': 'mturk',
+        'display_name': "mturk",
+        'num_demo_participants':  1,
         'app_sequence': [
-            'cournot_competition','payment_info'
-        ]
-    }
+            'mturk_submit',
+        ],
+    },
+
 ]
 
 
@@ -301,5 +285,6 @@ SEO = ()
 
 
 WSGI_APPLICATION = 'wsgi.application'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 otree.settings.augment_settings(globals())

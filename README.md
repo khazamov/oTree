@@ -354,7 +354,7 @@ oTree will not let the user submit values that are not positive integers, like `
 
 Additionally, you can customize validation by passing extra arguments to your model field definition. For example, if you want to require a number to be between 12 and 24, you can specify it like this:
 
-    offer = models.PositiveIntegerField(min_value=12, max_value=24)
+    offer = models.PositiveIntegerField(min=12, max=24)
 
 If you specify a `choices` argument, the default form widget will be a select box with these choices instead of the standard text field.
 
@@ -386,11 +386,11 @@ Example:
 
 * `def {field_name}_min(self)`
 
-The dynamic alternative to `min_value`.
+The dynamic alternative to `min`.
 
 * `def {field_name}_max(self)`
 
-The dynamic alternative to `max_value`.
+The dynamic alternative to `max`.
 
 * `def {field_name}_error_message(self, value)`
 
@@ -594,17 +594,17 @@ Each player has a `payoff` field, which is a `CurrencyField`. If your player mak
 
 Sometimes it is preferable for players to play games for points or "experimental currency units", which are converted to real money at the end of the session. You can set `USE_POINTS = True` in `settings.py`, and then in-game currency amounts will be expressed in points rather than real money.
 
-For example, `c(10)` is displayed as `10 points`. You can specify the conversion rate to real money in `settings.py` by providing a `money_per_point` key in the session type dictionary. For example, if you pay the user 2 cents per point, you would set `money_per_point = 0.02`.
+For example, `c(10)` is displayed as `10 points`. You can specify the conversion rate to real money in `settings.py` by providing a `real_world_currency_per_point` key in the session type dictionary. For example, if you pay the user 2 cents per point, you would set `real_world_currency_per_point = 0.02`.
 
-You can convert a point amount to money using the `to_money()` method,
+You can convert a point amount to money using the `to_real_world_currency()` method,
 which takes as an argument the current session
 (this is necessary because different sessions can have different conversion rates).
 
-Let's say `money_per_point = 0.02`
+Let's say `real_world_currency_per_point = 0.02`
 
 ```
 c(10) # evaluates to Currency(10 points)
-c(10).to_money(self.session) # evaluates to $0.20
+c(10).to_real_world_currency(self.session) # evaluates to $0.20
 ```
 
 # Treatments
