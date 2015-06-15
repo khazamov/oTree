@@ -45,7 +45,7 @@ class Constants:
     reward = c(2)
 
     # Player's deduction for the higher claim
-    penalty = c(2)
+    penalty = reward
 
     # The maximum claim to be requested
     max_amount = c(100)
@@ -82,7 +82,7 @@ class Player(otree.models.BasePlayer):
 
     # claim by player
     claim = models.CurrencyField(
-        min=Constants.min_amount,max=Constants.max_amount,
+        min=Constants.min_amount, max=Constants.max_amount,
         doc="""
         Each player's claim
         """,

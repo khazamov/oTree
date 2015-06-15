@@ -118,7 +118,7 @@ class Player(otree.models.BasePlayer):
 
     training_question_1_husband = models.CurrencyField(min=0, max=Constants.training_1_maximum_offered_points)
 
-    training_question_1_wife = models.CurrencyField(min = 0, max=Constants.training_1_maximum_offered_points)
+    training_question_1_wife = models.CurrencyField(min=0, max=Constants.training_1_maximum_offered_points)
 
     decision = models.CharField(
         choices=['Football', 'Opera'],
